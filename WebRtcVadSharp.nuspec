@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>WebRtcVadSharp</id>
+    <version>1.0.0</version>
+    <title>WebRtcVadSharp</title>
+    <authors>ladenedge</authors>
+    <owners>ladenedge</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/ladenedge/WebRtcVadSharp</projectUrl>
+    <description>.NET Standard interface for the WebRTC voice activity detection (VAD) component.</description>
+    <copyright>Copyright (c) 2020 Jay Miller</copyright>
+    <tags>webrtc vad voice detection recognition</tags>
+  </metadata>
+  <files>
+    <file src="WebRtcVadSharp\bin\Release\**" exclude="**\*.json" target="lib" />
+    <file src="WebRtcVad\bin\Win32\Release\WebRtcVad.dll" target="build\x86" />
+    <file src="WebRtcVad\bin\Win32\Release\WebRtcVad.lib" target="build\x86" />
+    <file src="WebRtcVad\bin\x64\Release\WebRtcVad.dll" target="build\x64" />
+    <file src="WebRtcVad\bin\x64\Release\WebRtcVad.lib" target="build\x64" />
+    <file src="WebRtcVadSharp.targets" target="build" />
+  </files>
+</package>

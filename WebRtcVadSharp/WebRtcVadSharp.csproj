@@ -18,5 +18,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>obj\WebRtcVadSharp.xml</DocumentationFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ContentWithTargetPath Include="..\WebRtcVad\bin\x64\$(Configuration)\WebRtcVad.dll" Link="WebRtc\WebRtcVad.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>WebRtcVad.dll</TargetPath>
+    </ContentWithTargetPath>
+  </ItemGroup>
  
 </Project>

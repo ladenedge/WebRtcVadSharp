@@ -2,8 +2,9 @@ os: windows
 language: cpp
 solution: WebRtcVadSharp.sln
 env:
-  - MSBUILD_PATH="c:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin"
+  - MSBUILD_PATH="c:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin"
 install:
+  - choco install visualstudio2019buildtools
   - choco install dotnetcore-sdk
   - dotnet restore
 script:

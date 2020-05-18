@@ -8,6 +8,6 @@ install:
   - dotnet restore
 script:
   - export PATH=$MSBUILD_PATH:$PATH
-  - MSBuild.exe //p:Configuration=Release WebRtcVadSharp.sln
+  - MSBuild.exe //p:Configuration=Release WebRtcVad/WebRtcVad.vcxproj
   - dotnet build --configuration Release
   - dotnet test WebRtcVadSharp.Tests/bin/Release/netcoreapp3.1/WebRtcVadSharp.Tests.dll

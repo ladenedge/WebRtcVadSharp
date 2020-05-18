@@ -1,5 +1,5 @@
+os: windows
 language: csharp
-mono: latest
 dotnet: 3.1.202
 solution: WebRtcVadSharp.sln
 install:

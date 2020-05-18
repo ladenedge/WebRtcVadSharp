@@ -1,5 +1,5 @@
 os: windows
-language: cpp
+language: csharp
 env:
   - MSBUILD_PATH="C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin"
 install:

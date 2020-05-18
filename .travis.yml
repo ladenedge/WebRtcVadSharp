@@ -4,6 +4,7 @@ language: cpp
 env:
   global:
     - MSBUILD_PATH="C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin"
+    - secure: "t8acKW3MKypx4DELVOH0IcOUtlu9TzMZhXZkcrtmVKezs1BkgkwpRYTPegQY+xck7DQs58QgNUg44RSnK5KhvrLi9E3ZLJaPpHQt+7oVzvloZAXWv99aDo9sUuW6FL3nj4L0yxWBU6X5Uuzy+IFmmhxMrSj731axaoNcEpSSd8BEZV9T58wkdeVq+bAS7uFLF5OPaVGZsogZsZWy+y11T8q9wEJOLvmDI27nPc8HkkMzRSc9SPRN1i/E7j6crF7LJCHTcbtl+lq+etcxqngrg7jUN8BM+FUVsovBd5kD+X7TWFDq2XeFCFN+wWebcAAHJiFhdW/I4u/Hk8RyaER3N9mFJzYZyi0tlXQEgi5CIwk+wEZs46LmRQsylvjwyahVRdbRcVDt4VdoSQdQrJg1KND5/ARr/gsIkGPbP4OgLfuPnlhbqtwLiYp3hSMeo9ab2/5oaQkA9MSdgT31zSZMn7B+YmFgMpqdNBlCW1crtsJngTasIfoMtkCxyf0iQtDcku814jiPBrUNuOV+p5ubw3iomeqcChMOrvBZUNF+DgQwrwg/zPmkWOfIUcNqJ0wWLXjk5ycAQuzIf5lOor6DhKs30gx3rrlTgg7WvsXES2xmstvj8YUm/g9G4zBt1ytlwRiOjaQgJt2BGqjbIwDNE7S2NV5bMhK7iaDA3/z7ex0="
 
 install:
   - choco install visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64"

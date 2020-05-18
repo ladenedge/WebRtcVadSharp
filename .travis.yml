@@ -1,0 +1,8 @@
+language: csharp
+solution: WebRtcVadSharp.sln
+install:
+  - dotnet restore
+script:
+  - msbuild /p:Configuration=Release WebRtcVadSharp.sln
+  - dotnet build
+  - dotnet test WebRtcVadSharp.Tests/bin/Release/netcoreapp3.1/WebRtcVadSharp.Tests.dll

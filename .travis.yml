@@ -12,7 +12,7 @@ script:
   - export PATH=$MSBUILD_PATH:$PATH
   - MSBuild.exe -p:Configuration=Release -p:Platform=x64 WebRtcVad/WebRtcVad.vcxproj
   - dotnet build --configuration Release
-  - dotnet test WebRtcVadSharp.Tests/bin/Release/netcoreapp3.1/WebRtcVadSharp.Tests.dll -p:CollectCoverage=true;CoverletOutputFormat=lcov
+  - dotnet test WebRtcVadSharp.Tests/WebRtcVadSharp.Tests.csproj -p:CollectCoverage=true;CoverletOutputFormat=lcov
   - REPO_COMMIT_AUTHOR=$(git show -s --pretty=format:"%cn")
   - REPO_COMMIT_AUTHOR_EMAIL=$(git show -s --pretty=format:"%ce")
   - REPO_COMMIT_MESSAGE=$(git show -s --pretty=format:"%s")

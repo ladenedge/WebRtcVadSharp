@@ -1,6 +1,6 @@
 language: csharp
 mono: latest
-dotnet: latest
+dotnet: 3.1.202
 solution: WebRtcVadSharp.sln
 install:
   - dotnet restore

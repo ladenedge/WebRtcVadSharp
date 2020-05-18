@@ -2,6 +2,7 @@ using AutoFixture.NUnit3;
 using Moq;
 using NUnit.Framework;
 using System;
+using System.IO;
 using WebRtcVadSharp.WebRtc;
 
 namespace WebRtcVadSharp.Tests
@@ -46,6 +47,14 @@ namespace WebRtcVadSharp.Tests
             libraryMock.Setup(l => l.Create()).Returns(IntPtr.Zero);
             libraryMock.Setup(l => l.Init(It.IsAny<IntPtr>())).Returns(-1);
             Assert.That(() => new WebRtcVad(libraryMock.Object), Throws.InstanceOf<ObjectDisposedException>());
+        }
+
+        [Test, AutoMoqData]
+        public void Constructor_ShowsCurrentDirectoryOnMissingDll([Frozen] Mock<IWebRtcDll> libraryMock)
+        {
+            libraryMock.Setup(l => l.Create()).Throws<DllNotFoundException>();
+            var currentDir = Directory.GetCurrentDirectory();
+            Assert.That(() => new WebRtcVad(libraryMock.Object), Throws.InstanceOf<DllNotFoundException>().With.Message.Contains(currentDir));
         }
 
         [Test, AutoMoqData]
@@ -96,6 +105,13 @@ namespace WebRtcVadSharp.Tests
         {
             libraryMock.Setup(l => l.ValidRateAndFrameLength(It.IsAny<int>(), It.IsAny<long>())).Returns(-1);
             Assert.That(() => vad.FrameLength = (FrameLength)length, Throws.ArgumentException.With.Message.Contains(nameof(FrameLength)));
+        }
+
+        [Test, AutoMoqData]
+        public void FrameLength_ThrowsOnOtherError([Frozen] Mock<IWebRtcDll> libraryMock, WebRtcVad vad)
+        {
+            libraryMock.Setup(l => l.ValidRateAndFrameLength(It.IsAny<int>(), It.IsAny<long>())).Returns(-1);
+            Assert.That(() => vad.SampleRate = SampleRate.Is8kHz, Throws.InvalidOperationException);
         }
 
         [Test, AutoMoqData]

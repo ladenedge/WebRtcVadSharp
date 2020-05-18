@@ -190,12 +190,10 @@ namespace WebRtcVadSharp
                 case 0: return false;
                 case 1: return true;
                 default:
-                    if (audioFrame == null)
-                        throw new ArgumentNullException(nameof(audioFrame));
                     ValidateHandle(handle);
                     ValidateEnum(sampleRate);
                     ValidateEnum(frameLength);
-                    throw new InvalidOperationException($"Could not process audio frame [Process({handle}, {sampleRate}, <ptr>, {frameLength}) = {result}].");
+                    throw new InvalidOperationException($"Could not process audio frame [Process({handle}, {sampleRate}, <byte[{audioFrame.Length}]>, {frameLength}) = {result}].");
             };
         }
 

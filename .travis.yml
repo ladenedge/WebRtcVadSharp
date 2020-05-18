@@ -12,8 +12,8 @@ script:
   - export PATH=$MSBUILD_PATH:$PATH
   - MSBuild.exe -p:Configuration=Release -p:Platform=x64 WebRtcVad/WebRtcVad.vcxproj
   - dotnet build --configuration Release
-  - dotnet test WebRtcVadSharp.Tests/bin/Release/netcoreapp3.1/WebRtcVadSharp.Tests.dll -p:CollectCoverage=true -p:CoverletOutputFormat=lcov
+  - dotnet test WebRtcVadSharp.Tests/bin/Release/netcoreapp3.1/WebRtcVadSharp.Tests.dll -p:CollectCoverage=true;CoverletOutputFormat=lcov
   - REPO_COMMIT_AUTHOR=$(git show -s --pretty=format:"%cn")
   - REPO_COMMIT_AUTHOR_EMAIL=$(git show -s --pretty=format:"%ce")
   - REPO_COMMIT_MESSAGE=$(git show -s --pretty=format:"%s")
-  - csmacnz.Coveralls -lcov -i coverage.info --repoToken $env:COVERALLS_TOKEN --commitId $TRAVIS_COMMIT --commitBranch $TRAVIS_BRANCH --commitAuthor "$REPO_COMMIT_AUTHOR" --commitEmail "$REPO_COMMIT_AUTHOR_EMAIL" --commitMessage "$REPO_COMMIT_MESSAGE" --jobId $TRAVIS_JOB_ID --serviceName travis-ci
+  - csmacnz.Coveralls.exe --lcov -i coverage.info --repoToken $env:COVERALLS_TOKEN --commitId $TRAVIS_COMMIT --commitBranch $TRAVIS_BRANCH --commitAuthor "$REPO_COMMIT_AUTHOR" --commitEmail "$REPO_COMMIT_AUTHOR_EMAIL" --commitMessage "$REPO_COMMIT_MESSAGE" --jobId $TRAVIS_JOB_ID --serviceName travis-ci

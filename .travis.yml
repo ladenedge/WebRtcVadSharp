@@ -6,13 +6,13 @@ env:
 install:
   - choco install visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64"
   - choco install dotnetcore-sdk
-  - dotnet tool install -g coveralls.net
   - dotnet restore
+  - dotnet tool install -g coveralls.net
 script:
   - export PATH=$MSBUILD_PATH:$PATH
   - MSBuild.exe -p:Configuration=Release -p:Platform=x64 WebRtcVad/WebRtcVad.vcxproj
-  - dotnet build --configuration Release
-  - dotnet test WebRtcVadSharp.Tests/WebRtcVadSharp.Tests.csproj -p:CollectCoverage=true;CoverletOutputFormat=lcov
+  - dotnet build -c Release
+  - dotnet test WebRtcVadSharp.Tests/WebRtcVadSharp.Tests.csproj -c Release -p:CollectCoverage=true;CoverletOutputFormat=lcov
   - REPO_COMMIT_AUTHOR=$(git show -s --pretty=format:"%cn")
   - REPO_COMMIT_AUTHOR_EMAIL=$(git show -s --pretty=format:"%ce")
   - REPO_COMMIT_MESSAGE=$(git show -s --pretty=format:"%s")

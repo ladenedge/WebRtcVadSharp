@@ -7,8 +7,7 @@ install:
   - choco install dotnetcore-sdk
   - dotnet restore
 script:
-  - ls -lR "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC"
   - export PATH=$MSBUILD_PATH:$PATH
-  - MSBuild.exe //p:Configuration=Release WebRtcVad/WebRtcVad.vcxproj
+  - MSBuild.exe -p:Configuration=Release -p:Platform=x64 WebRtcVad/WebRtcVad.vcxproj
   - dotnet build --configuration Release
   - dotnet test WebRtcVadSharp.Tests/bin/Release/netcoreapp3.1/WebRtcVadSharp.Tests.dll

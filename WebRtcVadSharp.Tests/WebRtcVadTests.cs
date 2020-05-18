@@ -34,14 +34,14 @@ namespace WebRtcVadSharp.Tests
         }
 
         [Test, AutoMoqData]
-        public void Constructor_ThrowsOnInitFailure([Frozen] Mock<IWebRtcVadDll> libraryMock)
+        public void Constructor_ThrowsOnInitFailure([Frozen] Mock<IWebRtcDll> libraryMock)
         {
             libraryMock.Setup(l => l.Init(It.IsAny<IntPtr>())).Returns(-1);
             Assert.That(() => new WebRtcVad(libraryMock.Object), Throws.InvalidOperationException);
         }
 
         [Test, AutoMoqData]
-        public void Constructor_ThrowsOnInvalidHandle([Frozen] Mock<IWebRtcVadDll> libraryMock)
+        public void Constructor_ThrowsOnInvalidHandle([Frozen] Mock<IWebRtcDll> libraryMock)
         {
             libraryMock.Setup(l => l.Create()).Returns(IntPtr.Zero);
             libraryMock.Setup(l => l.Init(It.IsAny<IntPtr>())).Returns(-1);
@@ -49,7 +49,7 @@ namespace WebRtcVadSharp.Tests
         }
 
         [Test, AutoMoqData]
-        public void Constructor_InitializesCreatedHandle([Frozen] Mock<IWebRtcVadDll> libraryMock, [Frozen] IntPtr handle, WebRtcVad _)
+        public void Constructor_InitializesCreatedHandle([Frozen] Mock<IWebRtcDll> libraryMock, [Frozen] IntPtr handle, WebRtcVad _)
         {
             libraryMock.Verify(l => l.Init(handle));
         }
@@ -62,7 +62,7 @@ namespace WebRtcVadSharp.Tests
         }
 
         [Test, AutoMoqData]
-        public void SampleRate_ValidatesNewValue([Frozen] Mock<IWebRtcVadDll> libraryMock, WebRtcVad vad, SampleRate rate)
+        public void SampleRate_ValidatesNewValue([Frozen] Mock<IWebRtcDll> libraryMock, WebRtcVad vad, SampleRate rate)
         {
             vad.SampleRate = rate;
             var expectedLength = ExpectedFrameLength(rate, vad.FrameLength);
@@ -70,7 +70,7 @@ namespace WebRtcVadSharp.Tests
         }
 
         [Test, AutoMoqData]
-        public void SampleRate_ThrowsOnInvalidRate([Frozen] Mock<IWebRtcVadDll> libraryMock, WebRtcVad vad, int rate)
+        public void SampleRate_ThrowsOnInvalidRate([Frozen] Mock<IWebRtcDll> libraryMock, WebRtcVad vad, int rate)
         {
             libraryMock.Setup(l => l.ValidRateAndFrameLength(It.IsAny<int>(), It.IsAny<long>())).Returns(-1);
             Assert.That(() => vad.SampleRate = (SampleRate)rate, Throws.ArgumentException.With.Message.Contains(nameof(SampleRate)));
@@ -84,7 +84,7 @@ namespace WebRtcVadSharp.Tests
         }
 
         [Test, AutoMoqData]
-        public void FrameLength_ValidatesNewValue([Frozen] Mock<IWebRtcVadDll> libraryMock, WebRtcVad vad, FrameLength length)
+        public void FrameLength_ValidatesNewValue([Frozen] Mock<IWebRtcDll> libraryMock, WebRtcVad vad, FrameLength length)
         {
             vad.FrameLength = length;
             var expectedLength = ExpectedFrameLength(vad.SampleRate, length);
@@ -92,7 +92,7 @@ namespace WebRtcVadSharp.Tests
         }
 
         [Test, AutoMoqData]
-        public void FrameLength_ThrowsOnInvalidLength([Frozen] Mock<IWebRtcVadDll> libraryMock, WebRtcVad vad, int length)
+        public void FrameLength_ThrowsOnInvalidLength([Frozen] Mock<IWebRtcDll> libraryMock, WebRtcVad vad, int length)
         {
             libraryMock.Setup(l => l.ValidRateAndFrameLength(It.IsAny<int>(), It.IsAny<long>())).Returns(-1);
             Assert.That(() => vad.FrameLength = (FrameLength)length, Throws.ArgumentException.With.Message.Contains(nameof(FrameLength)));
@@ -106,14 +106,14 @@ namespace WebRtcVadSharp.Tests
         }
 
         [Test, AutoMoqData]
-        public void OperatingMode_PassesAllParametersToSetMode([Frozen] Mock<IWebRtcVadDll> libraryMock, [Frozen] IntPtr handle, WebRtcVad vad, OperatingMode mode)
+        public void OperatingMode_PassesAllParametersToSetMode([Frozen] Mock<IWebRtcDll> libraryMock, [Frozen] IntPtr handle, WebRtcVad vad, OperatingMode mode)
         {
             vad.OperatingMode = mode;
             libraryMock.Verify(l => l.SetMode(handle, (int)mode));
         }
 
         [Test, AutoMoqData]
-        public void OperatingMode_ThrowsOnInvalidHandle([Frozen] Mock<IWebRtcVadDll> libraryMock, int mode)
+        public void OperatingMode_ThrowsOnInvalidHandle([Frozen] Mock<IWebRtcDll> libraryMock, int mode)
         {
             libraryMock.Setup(l => l.Create()).Returns(IntPtr.Zero);
             libraryMock.Setup(l => l.SetMode(It.IsAny<IntPtr>(), It.IsAny<int>())).Returns(-1);
@@ -122,7 +122,7 @@ namespace WebRtcVadSharp.Tests
         }
 
         [Test, AutoMoqData]
-        public void OperatingMode_ThrowsOnInvalidMode([Frozen] Mock<IWebRtcVadDll> libraryMock, WebRtcVad vad)
+        public void OperatingMode_ThrowsOnInvalidMode([Frozen] Mock<IWebRtcDll> libraryMock, WebRtcVad vad)
         {
             var invalidMode = 42;
             libraryMock.Setup(l => l.SetMode(It.IsAny<IntPtr>(), It.IsAny<int>())).Returns(-1);
@@ -130,14 +130,14 @@ namespace WebRtcVadSharp.Tests
         }
 
         [Test, AutoMoqData]
-        public void OperatingMode_ThrowsOnOtherError([Frozen] Mock<IWebRtcVadDll> libraryMock, WebRtcVad vad, OperatingMode mode)
+        public void OperatingMode_ThrowsOnOtherError([Frozen] Mock<IWebRtcDll> libraryMock, WebRtcVad vad, OperatingMode mode)
         {
             libraryMock.Setup(l => l.SetMode(It.IsAny<IntPtr>(), It.IsAny<int>())).Returns(-1);
             Assert.That(() => vad.OperatingMode = mode, Throws.InvalidOperationException);
         }
 
         [Test, AutoMoqData]
-        public void HasSpeech1_ThrowsOnInvalidHandle([Frozen] Mock<IWebRtcVadDll> libraryMock, byte[] audio)
+        public void HasSpeech1_ThrowsOnInvalidHandle([Frozen] Mock<IWebRtcDll> libraryMock, byte[] audio)
         {
             libraryMock.Setup(l => l.Create()).Returns(IntPtr.Zero);
             libraryMock.Setup(l => l.Process(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<byte[]>(), It.IsAny<long>())).Returns(-1);
@@ -146,7 +146,7 @@ namespace WebRtcVadSharp.Tests
         }
 
         [Test, AutoMoqData]
-        public void HasSpeech2_ThrowsOnInvalidHandle([Frozen] Mock<IWebRtcVadDll> libraryMock, byte[] audio, SampleRate rate, FrameLength length)
+        public void HasSpeech2_ThrowsOnInvalidHandle([Frozen] Mock<IWebRtcDll> libraryMock, byte[] audio, SampleRate rate, FrameLength length)
         {
             libraryMock.Setup(l => l.Create()).Returns(IntPtr.Zero);
             libraryMock.Setup(l => l.Process(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<byte[]>(), It.IsAny<long>())).Returns(-1);
@@ -181,7 +181,7 @@ namespace WebRtcVadSharp.Tests
         }
 
         [Test, AutoMoqData]
-        public void HasSpeech1_ThrowsOnInvalidSampleRate([Frozen] Mock<IWebRtcVadDll> libraryMock, WebRtcVad vad, byte[] audio)
+        public void HasSpeech1_ThrowsOnInvalidSampleRate([Frozen] Mock<IWebRtcDll> libraryMock, WebRtcVad vad, byte[] audio)
         {
             vad.SampleRate = (SampleRate)42;
             libraryMock.Setup(l => l.Process(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<byte[]>(), It.IsAny<long>())).Returns(-1);
@@ -189,14 +189,14 @@ namespace WebRtcVadSharp.Tests
         }
 
         [Test, AutoMoqData]
-        public void HasSpeech2_ThrowsOnInvalidSampleRate([Frozen] Mock<IWebRtcVadDll> libraryMock, WebRtcVad vad, byte[] audio, FrameLength length)
+        public void HasSpeech2_ThrowsOnInvalidSampleRate([Frozen] Mock<IWebRtcDll> libraryMock, WebRtcVad vad, byte[] audio, FrameLength length)
         {
             libraryMock.Setup(l => l.Process(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<byte[]>(), It.IsAny<long>())).Returns(-1);
             Assert.That(() => vad.HasSpeech(audio, (SampleRate)42, length), Throws.ArgumentException.With.Message.Contains(nameof(SampleRate)));
         }
 
         [Test, AutoMoqData]
-        public void HasSpeech1_ThrowsOnInvalidFrameLength([Frozen] Mock<IWebRtcVadDll> libraryMock, WebRtcVad vad, byte[] audio)
+        public void HasSpeech1_ThrowsOnInvalidFrameLength([Frozen] Mock<IWebRtcDll> libraryMock, WebRtcVad vad, byte[] audio)
         {
             vad.FrameLength = (FrameLength)42;
             libraryMock.Setup(l => l.Process(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<byte[]>(), It.IsAny<long>())).Returns(-1);
@@ -204,28 +204,28 @@ namespace WebRtcVadSharp.Tests
         }
 
         [Test, AutoMoqData]
-        public void HasSpeech2_ThrowsOnInvalidFrameLength([Frozen] Mock<IWebRtcVadDll> libraryMock, WebRtcVad vad, byte[] audio, SampleRate rate)
+        public void HasSpeech2_ThrowsOnInvalidFrameLength([Frozen] Mock<IWebRtcDll> libraryMock, WebRtcVad vad, byte[] audio, SampleRate rate)
         {
             libraryMock.Setup(l => l.Process(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<byte[]>(), It.IsAny<long>())).Returns(-1);
             Assert.That(() => vad.HasSpeech(audio, rate, (FrameLength)12), Throws.ArgumentException.With.Message.Contains(nameof(FrameLength)));
         }
 
         [Test, AutoMoqData]
-        public void HasSpeech1_ThrowsOnOtherError([Frozen] Mock<IWebRtcVadDll> libraryMock, WebRtcVad vad, byte[] audio)
+        public void HasSpeech1_ThrowsOnOtherError([Frozen] Mock<IWebRtcDll> libraryMock, WebRtcVad vad, byte[] audio)
         {
             libraryMock.Setup(l => l.Process(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<byte[]>(), It.IsAny<long>())).Returns(-1);
             Assert.That(() => vad.HasSpeech(audio), Throws.InvalidOperationException);
         }
 
         [Test, AutoMoqData]
-        public void HasSpeech2_ThrowsOnOtherError([Frozen] Mock<IWebRtcVadDll> libraryMock, WebRtcVad vad, byte[] audio, SampleRate rate, FrameLength length)
+        public void HasSpeech2_ThrowsOnOtherError([Frozen] Mock<IWebRtcDll> libraryMock, WebRtcVad vad, byte[] audio, SampleRate rate, FrameLength length)
         {
             libraryMock.Setup(l => l.Process(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<byte[]>(), It.IsAny<long>())).Returns(-1);
             Assert.That(() => vad.HasSpeech(audio, rate, length), Throws.InvalidOperationException);
         }
 
         [Test, AutoMoqData]
-        public void HasSpeech1_ReturnsResult([Frozen] Mock<IWebRtcVadDll> libraryMock, WebRtcVad vad, byte[] audio, bool result)
+        public void HasSpeech1_ReturnsResult([Frozen] Mock<IWebRtcDll> libraryMock, WebRtcVad vad, byte[] audio, bool result)
         {
             var returnCode = Convert.ToInt32(result);
             libraryMock.Setup(l => l.Process(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<byte[]>(), It.IsAny<long>())).Returns(returnCode);
@@ -234,7 +234,7 @@ namespace WebRtcVadSharp.Tests
         }
 
         [Test, AutoMoqData]
-        public void HasSpeech2_ReturnsResult([Frozen] Mock<IWebRtcVadDll> libraryMock, WebRtcVad vad, byte[] audio, SampleRate rate, FrameLength length, bool result)
+        public void HasSpeech2_ReturnsResult([Frozen] Mock<IWebRtcDll> libraryMock, WebRtcVad vad, byte[] audio, SampleRate rate, FrameLength length, bool result)
         {
             var returnCode = Convert.ToInt32(result);
             libraryMock.Setup(l => l.Process(It.IsAny<IntPtr>(), It.IsAny<int>(), It.IsAny<byte[]>(), It.IsAny<long>())).Returns(returnCode);
@@ -243,7 +243,7 @@ namespace WebRtcVadSharp.Tests
         }
 
         [Test, AutoMoqData]
-        public void HasSpeech1_PassesAllParametersToProcess([Frozen] Mock<IWebRtcVadDll> libraryMock, [Frozen] IntPtr handle, WebRtcVad vad, byte[] audio)
+        public void HasSpeech1_PassesAllParametersToProcess([Frozen] Mock<IWebRtcDll> libraryMock, [Frozen] IntPtr handle, WebRtcVad vad, byte[] audio)
         {
             vad.HasSpeech(audio);
             var expectedLength = ExpectedFrameLength(vad.SampleRate, vad.FrameLength);
@@ -251,7 +251,7 @@ namespace WebRtcVadSharp.Tests
         }
 
         [Test, AutoMoqData]
-        public void HasSpeech2_PassesAllParametersToProcess([Frozen] Mock<IWebRtcVadDll> libraryMock, [Frozen] IntPtr handle, WebRtcVad vad, byte[] audio, SampleRate rate, FrameLength length)
+        public void HasSpeech2_PassesAllParametersToProcess([Frozen] Mock<IWebRtcDll> libraryMock, [Frozen] IntPtr handle, WebRtcVad vad, byte[] audio, SampleRate rate, FrameLength length)
         {
             vad.HasSpeech(audio, rate, length);
             var expectedLength = ExpectedFrameLength(rate, length);
@@ -259,14 +259,14 @@ namespace WebRtcVadSharp.Tests
         }
 
         [Test, AutoMoqData]
-        public void Dispose_PassesHandleToFree([Frozen] Mock<IWebRtcVadDll> libraryMock, [Frozen] IntPtr handle, WebRtcVad vad)
+        public void Dispose_PassesHandleToFree([Frozen] Mock<IWebRtcDll> libraryMock, [Frozen] IntPtr handle, WebRtcVad vad)
         {
             vad.Dispose();
             libraryMock.Verify(l => l.Free(handle));
         }
 
         [Test, AutoMoqData]
-        public void Dispose_OnlyCallsFreeOnce([Frozen] Mock<IWebRtcVadDll> libraryMock, WebRtcVad vad)
+        public void Dispose_OnlyCallsFreeOnce([Frozen] Mock<IWebRtcDll> libraryMock, WebRtcVad vad)
         {
             vad.Dispose();
             vad.Dispose();
@@ -274,7 +274,7 @@ namespace WebRtcVadSharp.Tests
         }
 
         [Test, AutoMoqData]
-        public void Dispose_InvalidatesHandle([Frozen] Mock<IWebRtcVadDll> libraryMock, WebRtcVad vad, byte[] audio)
+        public void Dispose_InvalidatesHandle([Frozen] Mock<IWebRtcDll> libraryMock, WebRtcVad vad, byte[] audio)
         {
             Assume.That(() => vad.HasSpeech(audio), Throws.Nothing);
             vad.Dispose();

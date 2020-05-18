@@ -3,6 +3,9 @@
     /// <summary>
     /// Sample rate of the input audio.
     /// </summary>
+    /// <remarks>
+    /// WebRTC only supports specific combinations of frame sizes and sample rates.
+    /// </remarks>
     public enum SampleRate
     {
         /// <summary>

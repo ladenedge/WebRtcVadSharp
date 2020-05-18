@@ -8,7 +8,8 @@ detection (VAD) component.  The WebRTC VAD uses a
 to detect speech, typically more effectively than the more common energy
 threshold model.
 
-See below for a brief overview, or visit the wiki for more in-depth documentation.
+See below for a brief overview, or visit the wiki for more
+[in-depth documentation](../../wiki).
 
 Installation
 --
@@ -25,10 +26,10 @@ unmanaged library (WebRtcVad.dll) containing the supporting WebRTC algorithms.
 Usage
 --
 
-In the simplest case, you just need to instantiate a WebRtcVad object and
-supply it with a `byte[]` of audio.
+In the simplest case, you just need to instantiate a
+[WebRtcVad](../../wiki/WebRtcVad) object and supply it with a `byte[]` of audio.
 
-```
+```csharp
 bool DoesFrameContainSpeech(byte[] audioFrame)
 {
   using var vad = new WebRtcVad();
@@ -36,18 +37,18 @@ bool DoesFrameContainSpeech(byte[] audioFrame)
 }
 ```
 
-Note that `WebRtcVad` implements `IDisposable`, so a `using` block is necessary.
+Note that [WebRtcVad](../../wiki/WebRtcVad) implements `IDisposable`, so a `using` block is necessary.
 
 Configuration
 --
 
 The underlying VAD code can be configured along three axes:
 
-* **Frame size:** 10ms, 20ms and 30ms frames are supported.
-* **Sample rate:** 8kHz, 16kHz, 32kHz and 48kHz sample rates are supported.
-* **Operating mode:** four levels of "aggressiveness" are supported.
+* [**Frame size**](../../wiki/FrameSize-Enum): 10ms, 20ms and 30ms frames are supported.
+* [**Sample rate**](../../wiki/SampleRate-Enum): 8kHz, 16kHz, 32kHz and 48kHz sample rates are supported.
+* [**Operating mode**](../../wiki/OperatingMode-Enum): four levels of "aggressiveness" are supported.
 
-These options may be set via properties on the `WebRtcVad` object.  More
+These options may be set via properties on the [WebRtcVad](../../wiki/WebRtcVad) object.  More
 documentation on each is available in the wiki.
 
 License

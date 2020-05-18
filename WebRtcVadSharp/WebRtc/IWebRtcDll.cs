@@ -5,7 +5,7 @@ namespace WebRtcVadSharp.WebRtc
     /// <summary>
     /// Interface for the underlying WebRTC DLL.
     /// </summary>
-    public interface IWebRtcVadDll
+    public interface IWebRtcDll
     {
         /// <summary>
         /// Creates an empty VAD context.

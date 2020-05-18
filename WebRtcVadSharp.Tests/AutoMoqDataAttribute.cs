@@ -21,7 +21,7 @@ namespace WebRtcVadSharp.Tests
             fixture.Customize<IntPtr>(c => c.FromFactory((int ptr) => new IntPtr(ptr)));
 
             var defaultPointer = fixture.Freeze<IntPtr>();
-            fixture.Customize<Mock<IWebRtcVadDll>>(c => c.Do(m => m.Setup(l => l.Create()).Returns(defaultPointer)));
+            fixture.Customize<Mock<IWebRtcDll>>(c => c.Do(m => m.Setup(l => l.Create()).Returns(defaultPointer)));
             
             return fixture;
         }

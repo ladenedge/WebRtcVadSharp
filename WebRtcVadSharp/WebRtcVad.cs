@@ -19,13 +19,17 @@ namespace WebRtcVadSharp
         /// <summary>
         /// Creates and initializes a WebRTC voice activity detector.
         /// </summary>
-        public WebRtcVad() : this(new WebRtcVadDll()) { }
+        public WebRtcVad() : this(new WebRtcDll()) { }
 
         /// <summary>
         /// Creates and initializes a WebRTC voice activity detector.
         /// </summary>
+        /// <remarks>
+        /// This constructor injects a WebRTC library for unit testing, rather than
+        /// depending on the P/Invoke implementation provided by the default constructor.
+        /// </remarks>
         /// <param name="library">Interface for the underlying WebRTC library.</param>
-        public WebRtcVad(IWebRtcVadDll library)
+        public WebRtcVad(IWebRtcDll library)
         {
             _webrtc = library ?? throw new ArgumentNullException(nameof(library));
             _mode = OperatingMode.HighQuality;
@@ -45,7 +49,7 @@ namespace WebRtcVadSharp
             }
         }
 
-        private readonly IWebRtcVadDll _webrtc;
+        private readonly IWebRtcDll _webrtc;
         private IntPtr _handle;
         private SampleRate _rate;
         private FrameLength _length;
@@ -83,7 +87,7 @@ namespace WebRtcVadSharp
         /// Gets or sets the aggressiveness of the detection.
         /// Defaults to <see cref="OperatingMode.HighQuality"/>.
         /// </summary>
-        /// <seealso cref="OperatingMode"/>
+        /// <seealso cref="WebRtcVadSharp.OperatingMode"/>
         public OperatingMode OperatingMode
         {
             get => _mode;

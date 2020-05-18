@@ -3,6 +3,9 @@
     /// <summary>
     /// Frame length, in ms, of input audio.
     /// </summary>
+    /// <remarks>
+    /// WebRTC only supports specific combinations of frame sizes and sample rates.
+    /// </remarks>
     public enum FrameLength : long
     {
         /// <summary>

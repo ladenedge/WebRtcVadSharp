@@ -1,10 +1,14 @@
 os: windows
-language: csharp
-dotnet: 3.1.202
+language: cpp
 solution: WebRtcVadSharp.sln
+env:
+  - MSBUILD_PATH="c:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin"
 install:
   - dotnet restore
 script:
-  - msbuild /p:Configuration=Release WebRtcVadSharp.sln
+  #- export PATH=$MSBUILD_PATH:$PATH
+  #- ./build.bat
+  - MSBuild.exe //p:Configuration=Release WebRtcVadSharp.sln
+  #- choco install dotnetcore-sdk
   - dotnet build --configuration Release
   - dotnet test WebRtcVadSharp.Tests/bin/Release/netcoreapp3.1/WebRtcVadSharp.Tests.dll

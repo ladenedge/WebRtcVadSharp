@@ -7,7 +7,7 @@ namespace WebRtcVadSharp.WebRtc
     /// <summary>
     /// P/Invoke interface to the WebRTC DLL.
     /// </summary>
-    public class WebRtcVadDll : IWebRtcVadDll
+    public class WebRtcDll : IWebRtcDll
     {
         /// <inheritdoc/>
         public IntPtr Create()

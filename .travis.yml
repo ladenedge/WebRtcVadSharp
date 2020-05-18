@@ -1,14 +1,13 @@
 os: windows
 language: cpp
-solution: WebRtcVadSharp.sln
 env:
   - MSBUILD_PATH="C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin"
 install:
-  - choco install visualstudio2019buildtools
+  - choco install visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64"
   - choco install dotnetcore-sdk
   - dotnet restore
 script:
-  - ls -lR "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools"
+  - ls -lR "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC"
   - export PATH=$MSBUILD_PATH:$PATH
   - MSBuild.exe //p:Configuration=Release WebRtcVad/WebRtcVad.vcxproj
   - dotnet build --configuration Release

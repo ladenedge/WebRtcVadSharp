@@ -1,8 +1,9 @@
 os: windows
 language: cpp
 env:
-  - MSBUILD_PATH="C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin"
-  - secure: "k7Ju1BZBEf/De1Y7h35Z4IMU9ol75XZu2sJMEjPeFFDrZy2hs3MfSiVQ6guxTYmkxGDT12wvtvuiMKKybrhsMIatNnLOxIyYZo/rSBYXxk5PnO/Q1LLXyZpTibow1k/2jR799CPq07HLXdYJ57MFZVkJM+a/LcA0D1iWuNsToPokpupnpwsZwIkNGsDTTwqO1z+j3kU7P6PYE50sTL+hd1XMmA1Kts5FpObXkCQo6e4NdrwGN49HdhQVtoAhKfFfjUZw7oRpalLUHiapSqXLMuVmUaWJ0XwjF1Vfnimcww+PmreNF+mq9HBMuc8hbUtZvw3tX3ed3lXynOvuO3lckeS/s0RShnRcIjz2M4jfpqKr3VawX9esGgICPvT9Vw7aqR/h6aMe95Yd1EoZs0F6qTOkDC3pnPRbBkCrx5C2RtL0gM4BT8rwvezMSAHdVyNdpc5kohjuseGHRhGuKY0KQU+pXG2psLio/j+xPfaUHidCemo+z3XwK4cR/iPUKZYrB7wSzWDadHra8mSCGfqJZ48AYRKADymEyrvJM/1A3tOQxpSGXELyVHKq35lAywjlBbHl9saKy+CX23wvMXt4SIh1Mtw6/hE2qrekIA12JThSZ3RSyYPESpuS7K1Eoy6sMapiDcNQuJwuippwaqgVsV6Zo8W5OL2/qTblcUYAHLc="
+  global:
+    - MSBUILD_PATH="C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin"
+    - secure: "k7Ju1BZBEf/De1Y7h35Z4IMU9ol75XZu2sJMEjPeFFDrZy2hs3MfSiVQ6guxTYmkxGDT12wvtvuiMKKybrhsMIatNnLOxIyYZo/rSBYXxk5PnO/Q1LLXyZpTibow1k/2jR799CPq07HLXdYJ57MFZVkJM+a/LcA0D1iWuNsToPokpupnpwsZwIkNGsDTTwqO1z+j3kU7P6PYE50sTL+hd1XMmA1Kts5FpObXkCQo6e4NdrwGN49HdhQVtoAhKfFfjUZw7oRpalLUHiapSqXLMuVmUaWJ0XwjF1Vfnimcww+PmreNF+mq9HBMuc8hbUtZvw3tX3ed3lXynOvuO3lckeS/s0RShnRcIjz2M4jfpqKr3VawX9esGgICPvT9Vw7aqR/h6aMe95Yd1EoZs0F6qTOkDC3pnPRbBkCrx5C2RtL0gM4BT8rwvezMSAHdVyNdpc5kohjuseGHRhGuKY0KQU+pXG2psLio/j+xPfaUHidCemo+z3XwK4cR/iPUKZYrB7wSzWDadHra8mSCGfqJZ48AYRKADymEyrvJM/1A3tOQxpSGXELyVHKq35lAywjlBbHl9saKy+CX23wvMXt4SIh1Mtw6/hE2qrekIA12JThSZ3RSyYPESpuS7K1Eoy6sMapiDcNQuJwuippwaqgVsV6Zo8W5OL2/qTblcUYAHLc="
 install:
   - choco install visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64"
   - choco install dotnetcore-sdk
@@ -16,4 +17,4 @@ script:
   - REPO_COMMIT_AUTHOR=$(git show -s --pretty=format:"%cn")
   - REPO_COMMIT_AUTHOR_EMAIL=$(git show -s --pretty=format:"%ce")
   - REPO_COMMIT_MESSAGE=$(git show -s --pretty=format:"%s")
-  - ./tools/csmacnz.Coveralls.exe --lcov -i coverage.info --repoToken $env:COVERALLS_TOKEN --commitId $TRAVIS_COMMIT --commitBranch $TRAVIS_BRANCH --commitAuthor "$REPO_COMMIT_AUTHOR" --commitEmail "$REPO_COMMIT_AUTHOR_EMAIL" --commitMessage "$REPO_COMMIT_MESSAGE" --jobId $TRAVIS_JOB_ID --serviceName travis-ci
+  - ./tools/csmacnz.Coveralls.exe --lcov -i coverage.json --repoToken $env:COVERALLS_TOKEN --commitId $TRAVIS_COMMIT --commitBranch $TRAVIS_BRANCH --commitAuthor "$REPO_COMMIT_AUTHOR" --commitEmail "$REPO_COMMIT_AUTHOR_EMAIL" --commitMessage "$REPO_COMMIT_MESSAGE" --jobId $TRAVIS_JOB_ID --serviceName travis-ci

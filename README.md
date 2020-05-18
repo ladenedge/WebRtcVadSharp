@@ -44,7 +44,7 @@ Configuration
 
 The underlying VAD code can be configured along three axes:
 
-* [**Frame size**](../../wiki/FrameSize-Enum): 10ms, 20ms and 30ms frames are supported.
+* [**Frame length**](../../wiki/FrameLength-Enum): 10ms, 20ms and 30ms frames are supported.
 * [**Sample rate**](../../wiki/SampleRate-Enum): 8kHz, 16kHz, 32kHz and 48kHz sample rates are supported.
 * [**Operating mode**](../../wiki/OperatingMode-Enum): four levels of "aggressiveness" are supported.
 

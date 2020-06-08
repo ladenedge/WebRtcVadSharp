@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WebRtcVad", "WebRtcVad\WebRtcVad.vcxproj", "{4A02AAA0-E607-4BFF-AA64-E0A500FE8505}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebRtcVadSharp", "WebRtcVadSharp\WebRtcVadSharp.csproj", "{8751DED9-3FE7-4A15-9A02-C504A37D4B56}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4A02AAA0-E607-4BFF-AA64-E0A500FE8505} = {4A02AAA0-E607-4BFF-AA64-E0A500FE8505}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebRtcVadSharp.Tests", "WebRtcVadSharp.Tests\WebRtcVadSharp.Tests.csproj", "{58E44C17-DE8C-4D8F-9406-3E1C0A8BC141}"
 EndProject

@@ -9,6 +9,8 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Description>.NET Standard interface for the WebRTC voice activity detection (VAD) component.</Description>
     <PreserveCompilationContext>false</PreserveCompilationContext>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -20,10 +22,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <SourceRoot Include="$(MSBuildThisFileDirectory)/"/>
+    <EmbeddedFiles Include="$(GeneratedAssemblyInfoFile)"/>
+  </ItemGroup>
+
+  <ItemGroup>
     <ContentWithTargetPath Include="..\WebRtcVad\bin\x64\$(Configuration)\WebRtcVad.dll" Link="WebRtc\WebRtcVad.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <TargetPath>WebRtcVad.dll</TargetPath>
     </ContentWithTargetPath>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
  
 </Project>

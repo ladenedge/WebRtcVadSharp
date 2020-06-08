@@ -9,16 +9,18 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
     <projectUrl>https://github.com/ladenedge/WebRtcVadSharp</projectUrl>
+    <repository type="git" url="https://github.com/ladenedge/WebRtcVadSharp.git" />
     <description>.NET Standard interface for the WebRTC voice activity detection (VAD) component.</description>
     <copyright>Copyright (c) 2020 Jay Miller</copyright>
     <tags>webrtc vad voice detection recognition</tags>
+    <dependencies>
+      <group targetFramework="netstandard2.0" />
+    </dependencies>
   </metadata>
   <files>
-    <file src="WebRtcVadSharp\bin\Release\**" exclude="**\*.json" target="lib" />
-    <file src="WebRtcVad\bin\Win32\Release\WebRtcVad.dll" target="build\x86" />
-    <file src="WebRtcVad\bin\Win32\Release\WebRtcVad.lib" target="build\x86" />
-    <file src="WebRtcVad\bin\x64\Release\WebRtcVad.dll" target="build\x64" />
-    <file src="WebRtcVad\bin\x64\Release\WebRtcVad.lib" target="build\x64" />
+    <file src="WebRtcVadSharp\bin\Release\**" exclude="**\*.json;**\WebRtcVad.*" target="lib" />
+    <file src="WebRtcVad\bin\Win32\Release\WebRtcVad.*" exclude="**\*.i*" target="build\x86" />
+    <file src="WebRtcVad\bin\x64\Release\WebRtcVad.*" exclude="**\*.i*" target="build\x64" />
     <file src="WebRtcVadSharp.targets" target="build" />
   </files>
 </package>

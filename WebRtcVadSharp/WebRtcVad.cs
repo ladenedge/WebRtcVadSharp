@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using WebRtcVadSharp.WebRtc;
 
@@ -99,40 +100,51 @@ namespace WebRtcVadSharp
             }
         }
 
-        /// <summary>
-        /// Test whether the supplied frame contains speech.
-        /// </summary>
-        /// <param name="audioFrame">Single frame of audio.</param>
-        /// <remarks>
-        /// The supplied frame must be encoded according to <see cref="SampleRate"/> and <see cref="FrameLength"/>.
-        /// To test a frame at other rates or length, either re-set the appropriate properties, or use the
-        /// standalone overload <see cref="HasSpeech(byte[], SampleRate, FrameLength)"/>.
-        /// </remarks>
-        /// <returns><b>true</b> if the provided frame contains speech, otherwise <b>false</b>.</returns>
+        /// <inheritdoc/>
         public bool HasSpeech(byte[] audioFrame)
         {
             return HasSpeech(audioFrame, _rate, _length);
         }
 
-        /// <summary>
-        /// Test whether the supplied frame contains speech.
-        /// </summary>
-        /// <param name="audioFrame">Single frame of audio.</param>
-        /// <param name="sampleRate">The sample rate used to encode <paramref name="audioFrame"/>.</param>
-        /// <param name="frameLength">The length of the frame in <paramref name="audioFrame"/>.</param>
-        /// <remarks>
-        /// This overload ignores the <see cref="SampleRate"/> and <see cref="FrameLength"/> properties.
-        /// To avoid passing the rate and length on each call, use the <see cref="HasSpeech(byte[])"/>
-        /// overload instead.
-        /// </remarks>
-        /// <returns><b>true</b> if the provided frame contains speech, otherwise <b>false</b>.</returns>
+        /// <inheritdoc/>
         public bool HasSpeech(byte[] audioFrame, SampleRate sampleRate, FrameLength frameLength)
         {
             long frameSamples = CalculateSamples(sampleRate, frameLength);
-            if (audioFrame == null)
-                throw new ArgumentNullException(nameof(audioFrame));
-            if (audioFrame.Length < frameSamples * 2)
-                throw new ArgumentException($"Audio must contain at least {frameSamples} 16-bit samples ({frameSamples * 2} bytes)", nameof(audioFrame));
+            Debug.Assert(audioFrame != null, $"'{nameof(audioFrame)}' must not be null");
+            Debug.Assert(audioFrame.Length >= frameSamples * 2, $"Audio must contain at least {frameSamples} 16-bit samples ({frameSamples * 2} bytes)");
+
+            var result = _webrtc.Process(_handle, (int)sampleRate, audioFrame, frameSamples);
+            return ValidateProcess(result, _handle, sampleRate, audioFrame, frameLength);
+        }
+
+        /// <inheritdoc/>
+        public bool HasSpeech(short[] audioFrame)
+        {
+            return HasSpeech(audioFrame, _rate, _length);
+        }
+
+        /// <inheritdoc/>
+        public bool HasSpeech(short[] audioFrame, SampleRate sampleRate, FrameLength frameLength)
+        {
+            long frameSamples = CalculateSamples(sampleRate, frameLength);
+            Debug.Assert(audioFrame != null, $"'{nameof(audioFrame)}' must not be null");
+            Debug.Assert(audioFrame.Length >= frameSamples, $"Audio must contain at least {frameSamples} 16-bit samples");
+
+            var result = _webrtc.Process(_handle, (int)sampleRate, audioFrame, frameSamples);
+            return ValidateProcess(result, _handle, sampleRate, audioFrame, frameLength);
+        }
+
+        /// <inheritdoc/>
+        public bool HasSpeech(IntPtr audioFrame)
+        {
+            return HasSpeech(audioFrame, _rate, _length);
+        }
+
+        /// <inheritdoc/>
+        public bool HasSpeech(IntPtr audioFrame, SampleRate sampleRate, FrameLength frameLength)
+        {
+            long frameSamples = CalculateSamples(sampleRate, frameLength);
+            Debug.Assert(audioFrame != IntPtr.Zero, $"'{nameof(audioFrame)}' must not be a null pointer");
 
             var result = _webrtc.Process(_handle, (int)sampleRate, audioFrame, frameSamples);
             return ValidateProcess(result, _handle, sampleRate, audioFrame, frameLength);
@@ -185,6 +197,21 @@ namespace WebRtcVadSharp
 
         private bool ValidateProcess(int result, IntPtr handle, SampleRate sampleRate, byte[] audioFrame, FrameLength frameLength)
         {
+            return ValidateProcess(result, handle, sampleRate, $"byte[{audioFrame.Length}]", frameLength);
+        }
+
+        private bool ValidateProcess(int result, IntPtr handle, SampleRate sampleRate, short[] audioFrame, FrameLength frameLength)
+        {
+            return ValidateProcess(result, handle, sampleRate, $"short[{audioFrame.Length}]", frameLength);
+        }
+
+        private bool ValidateProcess(int result, IntPtr handle, SampleRate sampleRate, IntPtr audioFrame, FrameLength frameLength)
+        {
+            return ValidateProcess(result, handle, sampleRate, "0x" + audioFrame.ToInt64().ToString("X8"), frameLength);
+        }
+
+        private bool ValidateProcess(int result, IntPtr handle, SampleRate sampleRate, string frameDescription, FrameLength frameLength)
+        {
             switch (result)
             {
                 case 0: return false;
@@ -193,7 +220,7 @@ namespace WebRtcVadSharp
                     ValidateHandle(handle);
                     ValidateEnum(sampleRate);
                     ValidateEnum(frameLength);
-                    throw new InvalidOperationException($"Could not process audio frame [Process({handle}, {sampleRate}, <byte[{audioFrame.Length}]>, {frameLength}) = {result}].");
+                    throw new InvalidOperationException($"Could not process audio frame [Process({handle}, {sampleRate}, <{frameDescription}>, {frameLength}) = {result}].");
             };
         }
 

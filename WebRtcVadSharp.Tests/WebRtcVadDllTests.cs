@@ -98,7 +98,7 @@ namespace WebRtcVadSharp.Tests
 
             var after = FindMemoryUsage();
             
-            Assert.That(after, Is.EqualTo(before).Within(1).Percent);
+            Assert.That(after, Is.EqualTo(before).Within(5).Percent);
         }
 
         IEnumerable<bool> DetectAllFrames(WebRtcVad vad, string filename)

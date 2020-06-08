@@ -28,6 +28,18 @@ namespace WebRtcVadSharp.WebRtc
         }
 
         /// <inheritdoc/>
+        public int Process(IntPtr handle, int fs, short[] audio_frame, long frame_length)
+        {
+            return NativeMethods.Vad_Process(handle, fs, audio_frame, frame_length);
+        }
+
+        /// <inheritdoc/>
+        public int Process(IntPtr handle, int fs, IntPtr audio_frame, long frame_length)
+        {
+            return NativeMethods.Vad_Process(handle, fs, audio_frame, frame_length);
+        }
+
+        /// <inheritdoc/>
         public int SetMode(IntPtr self, int mode)
         {
             return NativeMethods.Vad_SetMode(self, mode);
@@ -61,6 +73,12 @@ namespace WebRtcVadSharp.WebRtc
 
             [DllImport("WebRtcVad.dll")]
             public static extern int Vad_Process(IntPtr handle, int fs, byte[] audio_frame, long frame_length);
+
+            [DllImport("WebRtcVad.dll")]
+            public static extern int Vad_Process(IntPtr handle, int fs, short[] audio_frame, long frame_length);
+
+            [DllImport("WebRtcVad.dll")]
+            public static extern int Vad_Process(IntPtr handle, int fs, IntPtr audio_frame, long frame_length);
 
             [DllImport("WebRtcVad.dll")]
             public static extern void Vad_Free(IntPtr handle);

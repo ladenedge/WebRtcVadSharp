@@ -57,7 +57,7 @@ namespace WebRtcVadSharp
         /// <remarks>
         /// The supplied frame must be encoded according to <see cref="SampleRate"/> and <see cref="FrameLength"/>.
         /// To test a frame at other rates or length, either re-set the appropriate properties, or use the
-        /// standalone overload <see cref="HasSpeech(byte[], SampleRate, FrameLength)"/>.
+        /// standalone overload <see cref="HasSpeech(short[], SampleRate, FrameLength)"/>.
         /// </remarks>
         /// <returns><b>true</b> if the provided frame contains speech, otherwise <b>false</b>.</returns>
         bool HasSpeech(short[] audioFrame);
@@ -70,7 +70,7 @@ namespace WebRtcVadSharp
         /// <param name="frameLength">The length of the frame in <paramref name="audioFrame"/>.</param>
         /// <remarks>
         /// This overload ignores the <see cref="SampleRate"/> and <see cref="FrameLength"/> properties.
-        /// To avoid passing the rate and length on each call, use the <see cref="HasSpeech(byte[])"/>
+        /// To avoid passing the rate and length on each call, use the <see cref="HasSpeech(short[])"/>
         /// overload instead.
         /// </remarks>
         /// <returns><b>true</b> if the provided frame contains speech, otherwise <b>false</b>.</returns>
@@ -83,7 +83,7 @@ namespace WebRtcVadSharp
         /// <remarks>
         /// The supplied frame must be encoded according to <see cref="SampleRate"/> and <see cref="FrameLength"/>.
         /// To test a frame at other rates or length, either re-set the appropriate properties, or use the
-        /// standalone overload <see cref="HasSpeech(byte[], SampleRate, FrameLength)"/>.
+        /// standalone overload <see cref="HasSpeech(IntPtr, SampleRate, FrameLength)"/>.
         /// </remarks>
         /// <returns><b>true</b> if the provided frame contains speech, otherwise <b>false</b>.</returns>
         bool HasSpeech(IntPtr audioFrame);
@@ -96,7 +96,7 @@ namespace WebRtcVadSharp
         /// <param name="frameLength">The length of the frame in <paramref name="audioFrame"/>.</param>
         /// <remarks>
         /// This overload ignores the <see cref="SampleRate"/> and <see cref="FrameLength"/> properties.
-        /// To avoid passing the rate and length on each call, use the <see cref="HasSpeech(byte[])"/>
+        /// To avoid passing the rate and length on each call, use the <see cref="HasSpeech(IntPtr)"/>
         /// overload instead.
         /// </remarks>
         /// <returns><b>true</b> if the provided frame contains speech, otherwise <b>false</b>.</returns>

@@ -11,7 +11,7 @@
     <PreserveCompilationContext>false</PreserveCompilationContext>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
-    <Version>1.2.0</Version>
+    <Version>1.2.1</Version>
     <PackageProjectUrl>https://github.com/ladenedge/WebRtcVadSharp</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ladenedge/WebRtcVadSharp.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -25,6 +25,7 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>obj\WebRtcVadSharp.xml</DocumentationFile>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
@@ -33,7 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ContentWithTargetPath Include="..\WebRtcVad\bin\x64\$(Configuration)\WebRtcVad.dll" Link="WebRtc\WebRtcVad.dll">
+    <ContentWithTargetPath Include="..\WebRtcVad\bin\Win32\$(Configuration)\WebRtcVad.dll" Link="WebRtc\WebRtcVad.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <TargetPath>WebRtcVad.dll</TargetPath>
     </ContentWithTargetPath>

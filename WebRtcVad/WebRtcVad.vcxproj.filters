@@ -171,9 +171,6 @@
   <ItemGroup>
     <None Include="webrtc\LICENSE" />
     <None Include="packages.config" />
-    <None Include="WebRtcVad.def">
-      <Filter>Source Files</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WebRtcVad.rc">

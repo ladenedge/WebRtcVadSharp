@@ -109,6 +109,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <ModuleDefinitionFile>WebRtcVad.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -126,6 +127,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <ModuleDefinitionFile>WebRtcVad.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -147,6 +149,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <ModuleDefinitionFile>WebRtcVad.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -168,10 +171,12 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <ModuleDefinitionFile>WebRtcVad.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="exports.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="webrtc\common_audio\signal_processing\complex_fft_tables.h" />
     <ClInclude Include="webrtc\common_audio\signal_processing\dot_product_with_scale.h" />
     <ClInclude Include="webrtc\common_audio\signal_processing\include\real_fft.h" />
@@ -224,8 +229,12 @@
     <ClCompile Include="webrtc\rtc_base\checks.cc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="WebRtcVad.def" />
     <None Include="packages.config" />
     <None Include="webrtc\LICENSE" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="WebRtcVad.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

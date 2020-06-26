@@ -34,7 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ContentWithTargetPath Include="..\WebRtcVad\bin\Win32\$(Configuration)\WebRtcVad.dll" Link="WebRtc\WebRtcVad.dll">
+    <ContentWithTargetPath Include="..\WebRtcVad\bin\x64\$(Configuration)\WebRtcVad.dll" Link="WebRtc\WebRtcVad.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <TargetPath>WebRtcVad.dll</TargetPath>
     </ContentWithTargetPath>

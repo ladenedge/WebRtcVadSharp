@@ -1,8 +1,0 @@
-LIBRARY WEBRTCVAD
-EXPORTS
-	Vad_Create                  @1
-	Vad_Free                    @2
-	Vad_Init                    @3
-	Vad_Process                 @4
-	Vad_SetMode                 @5
-	Vad_ValidRateAndFrameLength @6

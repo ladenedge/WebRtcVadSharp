@@ -2,6 +2,10 @@
 #ifndef EXPORTS_H_
 #define EXPORTS_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /** Lib export/import defines (win32) */
 #ifdef WEBRTC_WIN
 #ifdef WEBRTCVAD_EXPORTS
@@ -21,5 +25,9 @@ WEBRTC_DECLARE(int) Vad_SetMode(VadInst* self, int mode);
 WEBRTC_DECLARE(int) Vad_ValidRateAndFrameLength(int rate, size_t frame_length);
 WEBRTC_DECLARE(int) Vad_Process(VadInst* handle, int fs, const int16_t* audio_frame, size_t frame_length);
 WEBRTC_DECLARE(void) Vad_Free(VadInst* handle);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // EXPORTS_H_

@@ -1,3 +1,4 @@
+
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -5,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace WebRtcVadSharp.Tests
 {
@@ -86,6 +88,48 @@ namespace WebRtcVadSharp.Tests
         }
 
         [Test]
+        public void FrameTypeShort()
+        {
+            using var vad = new WebRtcVad()
+            {
+                FrameLength = FrameLength.Is30ms,
+            };
+
+            var results = DetectAllFrames(vad, "8k-speech.raw", buf =>
+            {
+                short[] shortbuf = new short[buf.Length / 2];
+                Buffer.BlockCopy(buf, 0, shortbuf, 0, buf.Length);
+                return vad.HasSpeech(shortbuf);
+            });
+
+            var resultMap = results.Aggregate("", (map, r) => map += (r ? "1" : "0"));
+
+            Assert.That(resultMap.ToString(), Is.EqualTo("011110111111111111111111111100"));
+        }
+
+        [Test]
+        public void FrameTypeIntPtr()
+        {
+            using var vad = new WebRtcVad()
+            {
+                FrameLength = FrameLength.Is30ms,
+            };
+
+            var results = DetectAllFrames(vad, "8k-speech.raw", buf =>
+            {
+                IntPtr ptrbuf = Marshal.AllocHGlobal(buf.Length);
+                Marshal.Copy(buf, 0, ptrbuf, buf.Length);
+                var result = vad.HasSpeech(ptrbuf);
+                Marshal.FreeHGlobal(ptrbuf);
+                return result;
+            });
+
+            var resultMap = results.Aggregate("", (map, r) => map += (r ? "1" : "0"));
+
+            Assert.That(resultMap.ToString(), Is.EqualTo("011110111111111111111111111100"));
+        }
+
+        [Test]
         public void MemoryUsage()
         {
             var allBytes = ReadTestFile("leak-test.raw");
@@ -103,13 +147,18 @@ namespace WebRtcVadSharp.Tests
 
         IEnumerable<bool> DetectAllFrames(WebRtcVad vad, string filename)
         {
+            return DetectAllFrames(vad, filename, buf => vad.HasSpeech(buf));
+        }
+
+        IEnumerable<bool> DetectAllFrames(WebRtcVad vad, string filename, Func<byte[], bool> hasSpeech)
+        {
             var frameSize = (int)vad.SampleRate / 1000 * 2 * (int)vad.FrameLength;
             var buffer = new byte[frameSize];
             using var audio = OpenTestFile(filename);
             for (int i = 0; i < audio.Length - frameSize; i += frameSize)
             {
                 audio.Read(buffer, 0, buffer.Length);
-                yield return vad.HasSpeech(buffer);
+                yield return hasSpeech(buffer);
             }
         }
 

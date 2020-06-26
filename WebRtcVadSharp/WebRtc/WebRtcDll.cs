@@ -71,13 +71,13 @@ namespace WebRtcVadSharp.WebRtc
             [DllImport("WebRtcVad.dll")]
             public static extern int Vad_ValidRateAndFrameLength(int rate, long frame_length);
 
-            [DllImport("WebRtcVad.dll")]
+            [DllImport("WebRtcVad.dll", EntryPoint = "#4")]
             public static extern int Vad_Process(IntPtr handle, int fs, byte[] audio_frame, long frame_length);
 
-            [DllImport("WebRtcVad.dll")]
+            [DllImport("WebRtcVad.dll", EntryPoint = "#4")]
             public static extern int Vad_Process(IntPtr handle, int fs, short[] audio_frame, long frame_length);
 
-            [DllImport("WebRtcVad.dll")]
+            [DllImport("WebRtcVad.dll", EntryPoint = "#4")]
             public static extern int Vad_Process(IntPtr handle, int fs, IntPtr audio_frame, long frame_length);
 
             [DllImport("WebRtcVad.dll")]

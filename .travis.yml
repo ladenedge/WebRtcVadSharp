@@ -18,7 +18,7 @@ script:
   - export PATH=$MSBUILD_PATH:$PATH
   - MSBuild.exe -p:Configuration=Release -p:Platform=x64 WebRtcVad/WebRtcVad.vcxproj
   - dotnet build -c Release
-  - $LOCALAPPDATA/Apps/OpenCover/OpenCover.Console.exe -target:"c:\program files\dotnet\dotnet.exe" -targetargs:test -register:user -filter:"+[WebRtcVadSharp]*"
+  - $LOCALAPPDATA/Apps/OpenCover/OpenCover.Console.exe -target:"c:\program files\dotnet\dotnet.exe" -targetargs:"test -c Release" -register -filter:"+[WebRtcVadSharp]*"
 
   - REPO_COMMIT_AUTHOR=$(git show -s --pretty=format:"%cn")
   - REPO_COMMIT_AUTHOR_EMAIL=$(git show -s --pretty=format:"%ce")

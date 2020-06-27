@@ -10,6 +10,7 @@ install:
   - choco install visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64"
   - choco install dotnetcore-sdk
   - choco install nuget.commandline
+  - choco install opencover
   - nuget restore
   - dotnet tool install coveralls.net --tool-path tools
 
@@ -17,9 +18,9 @@ script:
   - export PATH=$MSBUILD_PATH:$PATH
   - MSBuild.exe -p:Configuration=Release -p:Platform=x64 WebRtcVad/WebRtcVad.vcxproj
   - dotnet build -c Release
-  - dotnet test WebRtcVadSharp.Tests/WebRtcVadSharp.Tests.csproj -c Release -p:CollectCoverage=true -p:CoverletOutputFormat=lcov
+  - $LOCALAPPDATA/Apps/OpenCover/OpenCover.Console.exe -target:"c:\program files\dotnet\dotnet.exe" -targetargs:"test -c Release --no-build" -register -filter:"+[WebRtcVadSharp]*"
 
   - REPO_COMMIT_AUTHOR=$(git show -s --pretty=format:"%cn")
   - REPO_COMMIT_AUTHOR_EMAIL=$(git show -s --pretty=format:"%ce")
   - REPO_COMMIT_MESSAGE=$(git show -s --pretty=format:"%s")
-  - ./tools/csmacnz.Coveralls.exe --lcov -i WebRtcVadSharp.Tests/coverage.info --commitId $TRAVIS_COMMIT --commitBranch $TRAVIS_BRANCH --commitAuthor "$REPO_COMMIT_AUTHOR" --commitEmail "$REPO_COMMIT_AUTHOR_EMAIL" --commitMessage "$REPO_COMMIT_MESSAGE" --jobId $TRAVIS_JOB_ID --serviceName travis-ci
+  - ./tools/csmacnz.Coveralls.exe --opencover -i results.xml --commitId $TRAVIS_COMMIT --commitBranch $TRAVIS_BRANCH --commitAuthor "$REPO_COMMIT_AUTHOR" --commitEmail "$REPO_COMMIT_AUTHOR_EMAIL" --commitMessage "$REPO_COMMIT_MESSAGE" --jobId $TRAVIS_JOB_ID --serviceName travis-ci

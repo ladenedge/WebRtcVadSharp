@@ -476,10 +476,23 @@ namespace WebRtcVadSharp.Tests
             Assert.That(() => vad.HasSpeech(audio), Throws.InstanceOf<ObjectDisposedException>());
         }
 
+        [Test, AutoMoqData]
+        public void Dispose_FinalizerDoesNotCallFree([Frozen] Mock<IWebRtcDll> libraryMock, TestWebRtcVad vad)
+        {
+            vad.FinalizerDispose();
+            libraryMock.Verify(l => l.Free(It.IsAny<IntPtr>()), Times.Never);
+        }
+
         private long ExpectedFrameLength(SampleRate rate, FrameLength length)
         {
             // calculate a number of 16-bit samples
             return (int)rate / 1000 * (long)length;
+        }
+
+        public class TestWebRtcVad : WebRtcVad
+        {
+            public TestWebRtcVad(IWebRtcDll library) : base(library) { }
+            public void FinalizerDispose() => Dispose(false);
         }
     }
 }

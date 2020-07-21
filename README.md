@@ -18,7 +18,7 @@ See below for a brief overview, or visit the wiki for more
 Installation
 --
 
-WebRtcVadSharp is available on NuGet:
+WebRtcVadSharp is available on [NuGet](https://www.nuget.org/packages/WebRtcVadSharp):
 
 ```
 Install-Package WebRtcVadSharp

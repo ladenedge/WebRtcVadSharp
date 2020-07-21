@@ -13,6 +13,7 @@ See below for a brief overview, or visit the wiki for more
 
 [![Build Status](https://travis-ci.org/ladenedge/WebRtcVadSharp.svg?branch=master)](https://travis-ci.org/ladenedge/WebRtcVadSharp)
 [![Coverage Status](https://coveralls.io/repos/github/ladenedge/WebRtcVadSharp/badge.svg?branch=master)](https://coveralls.io/github/ladenedge/WebRtcVadSharp?branch=master)
+[![NuGet Version](https://img.shields.io/nuget/v/WebRtcVadSharp)](https://www.nuget.org/packages/WebRtcVadSharp)
 
 Installation
 --

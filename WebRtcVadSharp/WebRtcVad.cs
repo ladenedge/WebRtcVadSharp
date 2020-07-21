@@ -109,9 +109,9 @@ namespace WebRtcVadSharp
         /// <inheritdoc/>
         public bool HasSpeech(byte[] audioFrame, SampleRate sampleRate, FrameLength frameLength)
         {
-            long frameSamples = CalculateSamples(sampleRate, frameLength);
+            var frameSamples = CalculateSamples(sampleRate, frameLength);
             Debug.Assert(audioFrame != null, $"'{nameof(audioFrame)}' must not be null");
-            Debug.Assert(audioFrame.Length >= frameSamples * 2, $"Audio must contain at least {frameSamples} 16-bit samples ({frameSamples * 2} bytes)");
+            Debug.Assert((ulong)audioFrame.Length >= frameSamples * 2, $"Audio must contain at least {frameSamples} 16-bit samples ({frameSamples * 2} bytes)");
 
             var result = _webrtc.Process(_handle, (int)sampleRate, audioFrame, frameSamples);
             return ValidateProcess(result, _handle, sampleRate, audioFrame, frameLength);
@@ -126,9 +126,9 @@ namespace WebRtcVadSharp
         /// <inheritdoc/>
         public bool HasSpeech(short[] audioFrame, SampleRate sampleRate, FrameLength frameLength)
         {
-            long frameSamples = CalculateSamples(sampleRate, frameLength);
+            var frameSamples = CalculateSamples(sampleRate, frameLength);
             Debug.Assert(audioFrame != null, $"'{nameof(audioFrame)}' must not be null");
-            Debug.Assert(audioFrame.Length >= frameSamples, $"Audio must contain at least {frameSamples} 16-bit samples");
+            Debug.Assert((ulong)audioFrame.Length >= frameSamples, $"Audio must contain at least {frameSamples} 16-bit samples");
 
             var result = _webrtc.Process(_handle, (int)sampleRate, audioFrame, frameSamples);
             return ValidateProcess(result, _handle, sampleRate, audioFrame, frameLength);
@@ -143,7 +143,7 @@ namespace WebRtcVadSharp
         /// <inheritdoc/>
         public bool HasSpeech(IntPtr audioFrame, SampleRate sampleRate, FrameLength frameLength)
         {
-            long frameSamples = CalculateSamples(sampleRate, frameLength);
+            var frameSamples = CalculateSamples(sampleRate, frameLength);
             Debug.Assert(audioFrame != IntPtr.Zero, $"'{nameof(audioFrame)}' must not be a null pointer");
 
             var result = _webrtc.Process(_handle, (int)sampleRate, audioFrame, frameSamples);
@@ -152,10 +152,10 @@ namespace WebRtcVadSharp
 
         #region Result/argument validation
 
-        private long CalculateSamples(SampleRate rate, FrameLength length)
+        private ulong CalculateSamples(SampleRate rate, FrameLength length)
         {
             // calculate a number of 16-bit samples
-            return (int)rate / 1000 * (long)length;
+            return (ulong)rate / 1000 * (ulong)length;
         }
 
         private void ValidateInitialize(int result, IntPtr handle)

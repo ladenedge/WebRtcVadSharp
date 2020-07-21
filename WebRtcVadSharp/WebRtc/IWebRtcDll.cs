@@ -34,7 +34,7 @@ namespace WebRtcVadSharp.WebRtc
         /// <param name="rate">The sample rate to test.</param>
         /// <param name="frame_length">The frame length to test.</param>
         /// <returns>0 if the combination is valid, otherwise -1.</returns>
-        int ValidRateAndFrameLength(int rate, long frame_length);
+        int ValidRateAndFrameLength(int rate, ulong frame_length);
 
         /// <summary>
         /// Process a frame of audio for voice content.
@@ -44,7 +44,7 @@ namespace WebRtcVadSharp.WebRtc
         /// <param name="audio_frame">Frame of audio to test for speech.</param>
         /// <param name="frame_length">Length of the frame, in 16-bit samples.</param>
         /// <returns>1 if the sample contains speech, 0 if no speech is found, and -1 on error.</returns>
-        int Process(IntPtr handle, int fs, byte[] audio_frame, long frame_length);
+        int Process(IntPtr handle, int fs, byte[] audio_frame, ulong frame_length);
 
         /// <summary>
         /// Process a frame of audio for voice content.
@@ -54,7 +54,7 @@ namespace WebRtcVadSharp.WebRtc
         /// <param name="audio_frame">Frame of audio to test for speech.</param>
         /// <param name="frame_length">Length of the frame, in 16-bit samples.</param>
         /// <returns>1 if the sample contains speech, 0 if no speech is found, and -1 on error.</returns>
-        int Process(IntPtr handle, int fs, short[] audio_frame, long frame_length);
+        int Process(IntPtr handle, int fs, short[] audio_frame, ulong frame_length);
 
         /// <summary>
         /// Process a frame of audio for voice content.
@@ -64,7 +64,7 @@ namespace WebRtcVadSharp.WebRtc
         /// <param name="audio_frame">Frame of audio to test for speech.</param>
         /// <param name="frame_length">Length of the frame, in 16-bit samples.</param>
         /// <returns>1 if the sample contains speech, 0 if no speech is found, and -1 on error.</returns>
-        int Process(IntPtr handle, int fs, IntPtr audio_frame, long frame_length);
+        int Process(IntPtr handle, int fs, IntPtr audio_frame, ulong frame_length);
 
         /// <summary>
         /// Free the resources associated with the supplied handle.

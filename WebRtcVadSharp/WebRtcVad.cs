@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using WebRtcVadSharp.WebRtc;
 
 namespace WebRtcVadSharp
@@ -235,7 +236,7 @@ namespace WebRtcVadSharp
             if (Enum.IsDefined(typeof(T), val))
                 return;
 
-            var validValues = string.Join(", ", Enum.GetValues(typeof(T)));
+            var validValues = string.Join(", ", Enum.GetValues(typeof(T)).OfType<string>());
             throw new ArgumentException($"{val} was not a valid {typeof(T).Name}. Valid values are [{validValues}].");
         }
         

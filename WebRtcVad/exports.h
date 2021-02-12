@@ -9,9 +9,9 @@ extern "C" {
 /** Lib export/import defines (win32) */
 #ifdef WEBRTC_WIN
 #ifdef WEBRTCVAD_EXPORTS
-#define WEBRTC_DECLARE(type)   __declspec(dllexport) type __stdcall
+#define WEBRTC_DECLARE(type) __declspec(dllexport) type __stdcall
 #else
-#define WEBRTC_DECLARE(type)   __declspec(dllimport) type __stdcall
+#define WEBRTC_DECLARE(type) __declspec(dllimport) type __stdcall
 #endif
 #else
 #define WEBRTC_DECLARE(type) type

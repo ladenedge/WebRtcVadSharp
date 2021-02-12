@@ -174,7 +174,6 @@
     <ClInclude Include="webrtc\typedefs.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="dllmain.c" />
     <ClCompile Include="exports.c" />
     <ClCompile Include="webrtc\common_audio\signal_processing\complex_bit_reverse.c" />
     <ClCompile Include="webrtc\common_audio\signal_processing\complex_fft.c" />
@@ -201,6 +200,7 @@
     <ClCompile Include="webrtc\rtc_base\checks.cc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Makefile" />
     <None Include="packages.config" />
     <None Include="webrtc\LICENSE" />
   </ItemGroup>

@@ -172,15 +172,9 @@ namespace WebRtcVadSharp.Tests
             }
         }
 
-        float FindMemoryUsage()
+        long FindMemoryUsage()
         {
-            using var pc = new PerformanceCounter()
-            {
-                CategoryName = "Process",
-                CounterName = "Working Set - Private",
-                InstanceName = Process.GetCurrentProcess().ProcessName,
-            };
-            return pc.NextValue();
+            return Process.GetCurrentProcess().WorkingSet64;
         }
 
         Stream OpenTestFile(string filename)

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Runtime.InteropServices;
 
 namespace WebRtcVadSharp.WebRtc
@@ -22,17 +21,23 @@ namespace WebRtcVadSharp.WebRtc
         }
 
         /// <inheritdoc/>
-        public int Process(IntPtr handle, int fs, byte[] audio_frame, ulong frame_length)
+        unsafe public int Process(IntPtr handle, int fs, byte[] audio_frame, ulong frame_length)
         {
             var sizet_length = new UIntPtr(frame_length);
-            return NativeMethods.Vad_Process(handle, fs, audio_frame, sizet_length);
+            fixed (byte* frame_ptr = audio_frame)
+            {
+                return NativeMethods.Vad_Process(handle, fs, (IntPtr)frame_ptr, sizet_length);
+            }
         }
 
         /// <inheritdoc/>
-        public int Process(IntPtr handle, int fs, short[] audio_frame, ulong frame_length)
+        unsafe public int Process(IntPtr handle, int fs, short[] audio_frame, ulong frame_length)
         {
             var sizet_length = new UIntPtr(frame_length);
-            return NativeMethods.Vad_Process(handle, fs, audio_frame, sizet_length);
+            fixed (short* frame_ptr = audio_frame)
+            {
+                return NativeMethods.Vad_Process(handle, fs, (IntPtr)frame_ptr, sizet_length);
+            }
         }
 
         /// <inheritdoc/>
@@ -63,28 +68,22 @@ namespace WebRtcVadSharp.WebRtc
 
         private class NativeMethods
         {
-            [DllImport("WebRtcVad.dll")]
+            [DllImport("webrtcvad")]
             public static extern IntPtr Vad_Create();
 
-            [DllImport("WebRtcVad.dll")]
+            [DllImport("webrtcvad")]
             public static extern int Vad_Init(IntPtr handle);
 
-            [DllImport("WebRtcVad.dll")]
+            [DllImport("webrtcvad")]
             public static extern int Vad_SetMode(IntPtr self, int mode);
 
-            [DllImport("WebRtcVad.dll")]
+            [DllImport("webrtcvad")]
             public static extern int Vad_ValidRateAndFrameLength(int rate, UIntPtr frame_length);
 
-            [DllImport("WebRtcVad.dll", EntryPoint = "#4")]
-            public static extern int Vad_Process(IntPtr handle, int fs, byte[] audio_frame, UIntPtr frame_length);
-
-            [DllImport("WebRtcVad.dll", EntryPoint = "#4")]
-            public static extern int Vad_Process(IntPtr handle, int fs, short[] audio_frame, UIntPtr frame_length);
-
-            [DllImport("WebRtcVad.dll", EntryPoint = "#4")]
+            [DllImport("webrtcvad")]
             public static extern int Vad_Process(IntPtr handle, int fs, IntPtr audio_frame, UIntPtr frame_length);
 
-            [DllImport("WebRtcVad.dll")]
+            [DllImport("webrtcvad")]
             public static extern void Vad_Free(IntPtr handle);
         }
     }

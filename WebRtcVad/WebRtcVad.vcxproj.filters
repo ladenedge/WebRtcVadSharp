@@ -161,9 +161,6 @@
     <ClCompile Include="webrtc\rtc_base\checks.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="dllmain.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="exports.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -171,6 +168,7 @@
   <ItemGroup>
     <None Include="webrtc\LICENSE" />
     <None Include="packages.config" />
+    <None Include="Makefile" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WebRtcVad.rc">

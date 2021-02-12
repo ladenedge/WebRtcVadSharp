@@ -8,7 +8,7 @@ env:
 
 install:
   - choco install visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64"
-  - choco install dotnetcore-sdk
+  - choco install dotnet-5.0-sdk
   - choco install nuget.commandline
   - choco install opencover
   - nuget restore

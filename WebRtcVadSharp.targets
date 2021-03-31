@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Target Name="CopyWebRtcVadFiles" AfterTargets="AfterBuild">
+    <Warning Text="This project's platform is set to '$(PlatformTarget)', but it requires a native DLL (WebRtcVad.dll). Defaulting to 'x64' binaries. Explicitly choose a platform in the project's Build properties to remove this warning."
+             Condition="'$(PlatformTarget)' != 'x86' And '$(PlatformTarget)' != 'x64'" />
+    <PropertyGroup>
+      <WebRtcPlatformTarget>$(PlatformTarget)</WebRtcPlatformTarget>
+      <WebRtcPlatformTarget Condition="'$(PlatformTarget)' != 'x86' And '$(PlatformTarget)' != 'x64'">x64</WebRtcPlatformTarget>
+    </PropertyGroup>
     <ItemGroup>
-      <WebRtcVadFiles Include="$(MSBuildThisFileDirectory)$(PlatformTarget)\*.*" />
+      <WebRtcVadFiles Include="$(MSBuildThisFileDirectory)$(WebRtcPlatformTarget)\*.*" />
     </ItemGroup>
     <Copy SourceFiles="@(WebRtcVadFiles)" DestinationFolder="$(OutputPath)" />
   </Target>

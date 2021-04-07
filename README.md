@@ -1,18 +1,18 @@
-
+﻿
 WebRtcVadSharp
 ==
 
 A .NET Standard adapter for the [WebRTC](https://webrtc.org/) voice activity
 detection (VAD) component.  The WebRTC VAD uses a
 [Gaussian Mixture Model](https://en.wikipedia.org/wiki/Mixture_model)
-to detect speech, typically more effectively than the more common energy
+to detect speech, typically with better performance than the more common energy
 threshold model.
 
 See below for a brief overview, or visit the wiki for more
 [in-depth documentation](../../wiki).
 
-[![Build Status](https://travis-ci.org/ladenedge/WebRtcVadSharp.svg?branch=master)](https://travis-ci.org/ladenedge/WebRtcVadSharp)
-[![Coverage Status](https://coveralls.io/repos/github/ladenedge/WebRtcVadSharp/badge.svg?branch=master)](https://coveralls.io/github/ladenedge/WebRtcVadSharp?branch=master)
+[![Build Status](https://travis-ci.org/ladenedge/WebRtcVadSharp.svg?branch=main)](https://travis-ci.org/ladenedge/WebRtcVadSharp)
+[![Coverage Status](https://coveralls.io/repos/github/ladenedge/WebRtcVadSharp/badge.svg?branch=main)](https://coveralls.io/github/ladenedge/WebRtcVadSharp?branch=main)
 [![NuGet Version](https://img.shields.io/nuget/v/WebRtcVadSharp)](https://www.nuget.org/packages/WebRtcVadSharp)
 
 Installation
@@ -31,7 +31,7 @@ Usage
 --
 
 In the simplest case, you just need to instantiate a
-[WebRtcVad](../../wiki/WebRtcVad) object and supply it with a `byte[]` of audio.
+[WebRtcVad](../../wiki/WebRtcVad) object and supply it with a `byte[]` of raw audio.
 
 ```csharp
 bool DoesFrameContainSpeech(byte[] audioFrame)
@@ -41,7 +41,9 @@ bool DoesFrameContainSpeech(byte[] audioFrame)
 }
 ```
 
-Note that [WebRtcVad](../../wiki/WebRtcVad) implements `IDisposable`, so a `using` block is necessary.
+ℹ️ Note that [WebRtcVad](../../wiki/WebRtcVad) implements `IDisposable`, so a `using` block is necessary.
+
+ℹ️ This library (and WebRTC itself) only supports raw, 16-bit linear PCM audio, and will not work with WAV files or other container formats. For hints on converting your audio, see [issue #6](../../issues/6#issuecomment-812570219).
 
 Configuration
 --

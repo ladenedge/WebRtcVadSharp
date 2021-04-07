@@ -151,12 +151,6 @@ namespace WebRtcVadSharp.Tests
             return File.OpenRead(fullPath);
         }
 
-        static byte[] ReadTestFile(string filename)
-        {
-            var fullPath = Path.Combine(TestDirectory, filename);
-            return File.ReadAllBytes(fullPath);
-        }
-
         static string TestDirectory => Path.Combine(AssemblyDirectory, "TestData");
         static string AssemblyDirectory => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
     }

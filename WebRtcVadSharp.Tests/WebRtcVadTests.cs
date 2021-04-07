@@ -483,7 +483,7 @@ namespace WebRtcVadSharp.Tests
             libraryMock.Verify(l => l.Free(It.IsAny<IntPtr>()), Times.Never);
         }
 
-        private ulong ExpectedFrameLength(SampleRate rate, FrameLength length)
+        private static ulong ExpectedFrameLength(SampleRate rate, FrameLength length)
         {
             // calculate a number of 16-bit samples
             return (ulong)rate / 1000 * (ulong)length;

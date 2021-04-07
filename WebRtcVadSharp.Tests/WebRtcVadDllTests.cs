@@ -2,7 +2,6 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -129,28 +128,12 @@ namespace WebRtcVadSharp.Tests
             Assert.That(resultMap.ToString(), Is.EqualTo("011110111111111111111111111100"));
         }
 
-        [Test]
-        public void MemoryUsage()
-        {
-            var allBytes = ReadTestFile("leak-test.raw");
-            var buffer = new byte[8 * 2 * 10];
-
-            var before = FindMemoryUsage();
-
-            for (int i = 0; i < 1000; i++)
-                ReadAllFrames(allBytes, buffer);
-
-            var after = FindMemoryUsage();
-            
-            Assert.That(after, Is.EqualTo(before).Within(5).Percent);
-        }
-
-        IEnumerable<bool> DetectAllFrames(WebRtcVad vad, string filename)
+        static IEnumerable<bool> DetectAllFrames(WebRtcVad vad, string filename)
         {
             return DetectAllFrames(vad, filename, buf => vad.HasSpeech(buf));
         }
 
-        IEnumerable<bool> DetectAllFrames(WebRtcVad vad, string filename, Func<byte[], bool> hasSpeech)
+        static IEnumerable<bool> DetectAllFrames(WebRtcVad vad, string filename, Func<byte[], bool> hasSpeech)
         {
             var frameSize = (int)vad.SampleRate / 1000 * 2 * (int)vad.FrameLength;
             var buffer = new byte[frameSize];
@@ -162,44 +145,19 @@ namespace WebRtcVadSharp.Tests
             }
         }
 
-        void ReadAllFrames(byte[] allBytes, byte[] buffer)
-        {
-            using var vad = new WebRtcVad() { OperatingMode = OperatingMode.VeryAggressive };
-            for (int i = 0; i < allBytes.Length - buffer.Length; i += buffer.Length)
-            {
-                Array.Copy(allBytes, i, buffer, 0, buffer.Length);
-                vad.HasSpeech(buffer);
-            }
-        }
-
-        long FindMemoryUsage()
-        {
-            return Process.GetCurrentProcess().WorkingSet64;
-        }
-
-        Stream OpenTestFile(string filename)
+        static Stream OpenTestFile(string filename)
         {
             var fullPath = Path.Combine(TestDirectory, filename);
             return File.OpenRead(fullPath);
         }
 
-        byte[] ReadTestFile(string filename)
+        static byte[] ReadTestFile(string filename)
         {
             var fullPath = Path.Combine(TestDirectory, filename);
             return File.ReadAllBytes(fullPath);
         }
 
-        string TestDirectory => Path.Combine(AssemblyDirectory, "TestData");
-
-        static string AssemblyDirectory
-        {
-            get
-            {
-                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
-                UriBuilder uri = new UriBuilder(codeBase);
-                string path = Uri.UnescapeDataString(uri.Path);
-                return Path.GetDirectoryName(path);
-            }
-        }
+        static string TestDirectory => Path.Combine(AssemblyDirectory, "TestData");
+        static string AssemblyDirectory => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
     }
 }

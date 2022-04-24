@@ -236,7 +236,7 @@ namespace WebRtcVadSharp
             if (Enum.IsDefined(typeof(T), val))
                 return;
 
-            var validValues = string.Join(", ", Enum.GetValues(typeof(T)).OfType<string>());
+            var validValues = string.Join(", ", Enum.GetValues(typeof(T)).OfType<T>());
             throw new ArgumentException($"{val} was not a valid {typeof(T).Name}. Valid values are [{validValues}].");
         }
         
